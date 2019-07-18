@@ -1,20 +1,42 @@
-// This code uses the ping/pong example from github
 package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
+	"gopkg.in/yaml.v2"
 )
 
-// Token token for the Discord Bot as part of interacting with their API
-var Token = "NjAxMjU0NjI4MDY3MTE1MDA5.XS_q5Q.3z_DGEzSJjaUqUzUYbRxBaSV72c"
+type conf struct {
+	Token string `yaml:"token"`
+}
+
+func (c *conf) getConf() *conf {
+
+	yamlFile, err := ioutil.ReadFile("config/config.yaml")
+	if err != nil {
+		log.Printf("yamlFile.Get err   #%v ", err)
+	}
+	err = yaml.Unmarshal(yamlFile, c)
+	if err != nil {
+		log.Fatalf("Unmarshal: %v", err)
+	}
+
+	return c
+}
 
 func main() {
+
+	// Token token for the Discord Bot as part of interacting with their API
+	var c conf
+	var Token = c.getConf().Token
+
 	// Create a new Discord session using the provided bot token.
 	dg, err := discordgo.New("Bot " + Token)
 	if err != nil {
