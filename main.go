@@ -25,7 +25,7 @@ func (c *conf) getConf() (*conf, error) {
 
 	err = yaml.Unmarshal(yamlFile, c)
 	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshall configuration file into yaml: %v")
+		return nil, fmt.Errorf("failed to unmarshall configuration file into yaml: %v", err)
 	}
 
 	return c, nil
