@@ -17,25 +17,34 @@ type conf struct {
 	Token string `yaml:"token"`
 }
 
-func (c *conf) getConf() *conf {
-
+func (c *conf) getConf() (*conf, error) {
 	yamlFile, err := ioutil.ReadFile("config.yaml")
 	if err != nil {
-		log.Printf("yamlFile.Get err   #%v ", err)
-	}
-	err = yaml.Unmarshal(yamlFile, c)
-	if err != nil {
-		log.Fatalf("Unmarshal: %v", err)
+		return nil, fmt.Errorf("failed to read configuration file: %v", err)
 	}
 
-	return c
+	err = yaml.Unmarshal(yamlFile, c)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshall configuration file into yaml: %v", err)
+	}
+
+	return c, nil
 }
 
 func main() {
 
 	// Token token for the Discord Bot as part of interacting with their API
 	var c conf
-	var Token = c.getConf().Token
+	
+	// read the configuration file, panic if it's not found
+	configFile, err := c.getConf()
+	if err != nil {
+		panic(err)
+	}
+	
+	// this should probably be set to lowercase since we don't usually want
+	// to export things in the main package.
+	Token := configFile.Token
 
 	// Create a new Discord session using the provided bot token.
 	dg, err := discordgo.New("Bot " + Token)
