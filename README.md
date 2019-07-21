@@ -9,7 +9,7 @@ A fully-functional Discord Bot that is capable of interacting with the Triton Me
 
 ### Discord Development Portal
 
-0. Create a sandbox Discord server or use an `test` text channel within an existing server
+0. Create a sandbox Discord server or use a `test` text channel within an existing server. Change the Discord Server Notification scheme to be only @mentions or this will spam people with notifications.
 
 1. Go to the [Discord dev portal](https://discordapp.com/developers/applications/) and create a new application (e.g. TritonBot)
 
@@ -36,7 +36,9 @@ git clone git@github.com:tritonmedia/discord-bot discord-bot; cd "discord-bot"
 
 ```bash
 # in the discord-bot directory
-go run main.go
+make && ./bin/discord-bot
 ```
 
 4. Go to Discord, and you should be able to communicate with the bot by invoking `!triton`.
+
+5. Killing (Ctrl+C) the application will cause the bot to go offline in Discord
