@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"os/signal"
 	"strings"
@@ -17,31 +16,17 @@ type conf struct {
 	Token string `yaml:"token"`
 }
 
-func (c *conf) getConf() (*conf, error) {
-	yamlFile, err := ioutil.ReadFile("config.yaml")
-	if err != nil {
-		return nil, fmt.Errorf("failed to read configuration file: %v", err)
-	}
-
-	err = yaml.Unmarshal(yamlFile, c)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshall configuration file into yaml: %v", err)
-	}
-
-	return c, nil
-}
-
 func main() {
 
 	// Token token for the Discord Bot as part of interacting with their API
 	var c conf
-	
+
 	// read the configuration file, panic if it's not found
 	configFile, err := c.getConf()
 	if err != nil {
 		panic(err)
 	}
-	
+
 	// this should probably be set to lowercase since we don't usually want
 	// to export things in the main package.
 	Token := configFile.Token
@@ -71,6 +56,21 @@ func main() {
 
 	// Cleanly close down the Discord session.
 	dg.Close()
+}
+
+// This function will parse the contents of the config.yaml
+func (c *conf) getConf() (*conf, error) {
+	yamlFile, err := ioutil.ReadFile("config.yaml")
+	if err != nil {
+		return nil, fmt.Errorf("failed to read configuration file: %v", err)
+	}
+
+	err = yaml.Unmarshal(yamlFile, c)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshall configuration file into yaml: %v", err)
+	}
+
+	return c, nil
 }
 
 // This function will be called (due to AddHandler above) every time a new
