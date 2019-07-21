@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"strings"
 	"syscall"
 
@@ -18,7 +19,6 @@ type conf struct {
 
 func main() {
 
-	// Token token for the Discord Bot as part of interacting with their API
 	var c conf
 
 	// read the configuration file, panic if it's not found
@@ -60,7 +60,12 @@ func main() {
 
 // This function will parse the contents of the config.yaml
 func (c *conf) getConf() (*conf, error) {
-	yamlFile, err := ioutil.ReadFile("config.yaml")
+
+	d, err := os.Getwd()
+	fmt.Println(d)
+
+	//TODO Fixme: so that `d` is the root of the discord-bot project
+	yamlFile, err := ioutil.ReadFile(filepath.Join(d, "config/config.yaml"))
 	if err != nil {
 		return nil, fmt.Errorf("failed to read configuration file: %v", err)
 	}
