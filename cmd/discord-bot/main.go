@@ -62,7 +62,9 @@ func main() {
 func (c *conf) getConf() (*conf, error) {
 
 	d, err := os.Getwd()
-	fmt.Println(d)
+	if err != nil {
+		return nil, err
+	}
 
 	//TODO Fixme: so that `d` is the root of the discord-bot project
 	yamlFile, err := ioutil.ReadFile(filepath.Join(d, "config/config.yaml"))
