@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/tritonmedia/discord-bot)](https://goreportcard.com/report/github.com/tritonmedia/discord-bot)
+[![codebeat badge](https://codebeat.co/badges/d9f69da5-cfa9-4b3b-bfb7-c15a4398b5cd)](https://codebeat.co/projects/github-com-tritonmedia-discord-bot-master-d046ddd4-43e8-4e90-9717-5578d6d5697d)
 
 # discord-bot
 
